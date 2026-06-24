@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#set this to the exome sequence directory that you want (should contain PLINK formatted files)
+
 imp_file_dir="/Bulk/Genotype_Results/Genotype_calls"
-#set this to the exome data field for your release
+
 data_file_dir="/data"
 data_field="ukb22418"
 export project=`dx pwd`
