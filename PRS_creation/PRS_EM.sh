@@ -10,7 +10,7 @@ plink_PRS="plink2 --bfile ukb22418_all_EM_F \
   --extract clump_EM.SNP \
   --out prs_scores_EM"
 
-# Submit the DNAnexus job
+# DNAnexus job
 dx run swiss-army-knife \
   -iin="${project}data/ukb22418_all_EM_F.bim" \
   -iin="${project}data/ukb22418_all_EM_F.bed" \
