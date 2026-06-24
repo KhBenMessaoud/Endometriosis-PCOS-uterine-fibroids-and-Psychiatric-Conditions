@@ -1,0 +1,66 @@
+##Uterine fibroids lifotver to hg19 done
+
+awk 'NR>1 {print $2}' UF_hg19_new.txt > snplist_UF.txt
+
+sh subset_UF.sh 
+
+dx ls data/ukb22418_c*_subset_qc_UF.bed | sed 's/.bed//' > merge_list_UF.txt
+
+#run on RAP swiss army knife
+plink --bfile ukb22418_c1_subset_qc_UF --merge-list merge_list_UF.txt --make-bed --out ukb22418_all_UF_preQC
+plink --bfile ukb22418_all_UF_preQC  --keep-fam usedinpca.txt  --make-bed  --out ukb22418_all_UF
+
+sh clump_UF.sh
+
+awk 'NR!=1{print $3}' clump_UF.clumps >  clump_UF.SNP
+
+gunzip -c UF_hg19_new.txt.gz | awk '{print $2,$7}' > SNP.pvalue.UF
+
+plink --bfile ukb22418_all_UF --filter-females --make-bed --out ukb22418_all_UF_F
+
+sh PRS_UF.sh
+
+##Endometriosis
+
+gunzip -c finngen_R12_N14_ENDOMETRIOSIS.gz | awk 'NR>1 {print $5}' > snplist_EM.txt
+
+sh subset_EM.sh 
+
+dx ls data/ukb22418_c*_subset_qc_EM.bed | sed 's/.bed//' > merge_list_EM.txt
+
+#run on RAP swiss army knife
+plink --bfile ukb22418_c1_subset_qc_EM --merge-list merge_list_EM.txt --make-bed --out ukb22418_all_EM_preQC
+plink --bfile ukb22418_all_EM_preQC  --keep-fam usedinpca.txt  --make-bed  --out ukb22418_all_EM
+
+
+sh clump_EM.sh
+
+awk 'NR!=1{print $3}' clump_EM.clumps >  clump_EM.SNP
+
+gunzip -c finngen_R12_N14_ENDOMETRIOSIS.gz | awk '{print $5,$7}' > SNP.pvalue.EM
+
+plink --bfile ukb22418_all_EM --filter-females --make-bed --out ukb22418_all_EM_F
+
+sh PRS_EM.sh
+
+
+##PCOS 
+gunzip -c  PCOS.tsv.gz | awk 'NR>1 {print $9}' > snplist_PCOS.txt
+
+sh subset_PCOS.sh 
+
+dx ls data/ukb22418_c*_subset_qc_PCOS.bed | sed 's/.bed//' > merge_list_PCOS.txt
+
+#run on RAP swiss army knife
+plink --bfile ukb22418_c1_subset_qc_PCOS --merge-list merge_list_PCOS.txt --make-bed --out ukb22418_all_PCOS_preQC
+plink --bfile ukb22418_all_PCOS_preQC  --keep-fam usedinpca.txt  --make-bed  --out ukb22418_all_PCOS
+
+sh clump_PCOS.sh
+
+awk 'NR!=1{print $3}' clump_PCOS.clumps >  clump_PCOS.SNP
+
+gunzip -c  PCOS.tsv.gz | awk '{print $9,$8}' > SNP.pvalue.PCOS
+
+plink --bfile ukb22418_all_PCOS --filter-females --make-bed --out ukb22418_all_PCOS_F
+
+sh PRS_PCOS.sh
