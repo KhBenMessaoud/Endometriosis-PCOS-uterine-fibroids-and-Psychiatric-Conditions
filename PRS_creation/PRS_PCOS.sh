@@ -10,7 +10,7 @@ plink_PRS="plink2 --bfile ukb22418_all_PCOS_F \
   --extract clump_PCOS.SNP \
   --out prs_scores_PCOS"
 
-# Submit the DNAnexus job
+# DNAnexus job
 dx run swiss-army-knife \
   -iin="${project}data/ukb22418_all_PCOS_F.bim" \
   -iin="${project}data/ukb22418_all_PCOS_F.bed" \
